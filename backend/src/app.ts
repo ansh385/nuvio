@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { supabase } from "./config/supabase";
 
 const app = express();
 
@@ -12,6 +13,26 @@ app.get("/api/health", (_req, res) => {
         service: "Nuvio API",
         version: "1.0.0",
     });
+});
+
+app.get("/api/database-health", async (_req, res) => {
+    try {
+        const { error } = await supabase.auth.getSession();
+
+        if (error) {
+            throw error;
+        }
+
+        res.status(200).json({
+            status: "connected",
+            service: "Supabase",
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "error",
+            message: "Failed to connect to Supabase",
+        });
+    }
 });
 
 export default app;
