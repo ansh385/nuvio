@@ -1,21 +1,16 @@
-import type { Request, Response } from "express";
-import { signUpUser, loginUser } from "../services/auth.service";
+import type { NextFunction, Request, Response } from "express";
+import { loginUser, signUpUser } from "../services/auth.service";
+import { authSchema } from "../validators/auth.validator";
 
-export async function signUp(req: Request, res: Response) {
+export async function signUp(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     try {
-        const { email, password } = req.body;
+        const { email, password } = authSchema.parse(req.body);
 
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required",
-            });
-        }
-
-        const data = await signUpUser({
-            email,
-            password,
-        });
+        const data = await signUpUser({ email, password });
 
         return res.status(201).json({
             success: true,
@@ -23,31 +18,19 @@ export async function signUp(req: Request, res: Response) {
             data,
         });
     } catch (error) {
-        const message =
-            error instanceof Error ? error.message : "Registration failed";
-
-        return res.status(400).json({
-            success: false,
-            message,
-        });
+        next(error);
     }
 }
 
-export async function login(req: Request, res: Response) {
+export async function login(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     try {
-        const { email, password } = req.body;
+        const { email, password } = authSchema.parse(req.body);
 
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required",
-            });
-        }
-
-        const data = await loginUser({
-            email,
-            password,
-        });
+        const data = await loginUser({ email, password });
 
         return res.status(200).json({
             success: true,
@@ -55,17 +38,14 @@ export async function login(req: Request, res: Response) {
             data,
         });
     } catch (error) {
-        const message =
-            error instanceof Error ? error.message : "Login failed";
-
-        return res.status(401).json({
-            success: false,
-            message,
-        });
+        next(error);
     }
 }
 
-export async function getCurrentUser(req: Request, res: Response) {
+export async function getCurrentUser(
+    _req: Request,
+    res: Response
+) {
     return res.status(200).json({
         success: true,
         message: "Authenticated user retrieved successfully",

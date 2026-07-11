@@ -3,6 +3,7 @@ import cors from "cors";
 import { supabase } from "./config/supabase";
 import authRoutes from "./routes/auth.routes";
 import profileRoutes from "./routes/profile.routes";
+import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
@@ -38,5 +39,7 @@ app.get("/api/database-health", async (_req, res) => {
         });
     }
 });
+
+app.use(errorHandler);
 
 export default app;

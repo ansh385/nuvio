@@ -1,7 +1,12 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { updateUserProfile } from "../services/profile.service";
+import { onboardingSchema } from "../validators/profile.validator";
 
-export async function completeOnboarding(req: Request, res: Response) {
+export async function completeOnboarding(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     try {
         const user = res.locals.user;
         const authHeader = req.headers.authorization;
@@ -15,34 +20,12 @@ export async function completeOnboarding(req: Request, res: Response) {
 
         const accessToken = authHeader.split(" ")[1];
 
-        const {
-            full_name,
-            career_goal,
-            experience_level,
-            daily_study_minutes,
-        } = req.body;
-
-        if (
-            !full_name ||
-            !career_goal ||
-            !experience_level ||
-            daily_study_minutes === undefined
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "All onboarding fields are required",
-            });
-        }
+        const profileData = onboardingSchema.parse(req.body);
 
         const profile = await updateUserProfile(
             user.id,
             accessToken,
-            {
-                full_name,
-                career_goal,
-                experience_level,
-                daily_study_minutes,
-            }
+            profileData
         );
 
         return res.status(200).json({
@@ -51,12 +34,6 @@ export async function completeOnboarding(req: Request, res: Response) {
             data: profile,
         });
     } catch (error) {
-        const message =
-            error instanceof Error ? error.message : "Onboarding failed";
-
-        return res.status(400).json({
-            success: false,
-            message,
-        });
+        next(error);
     }
 }
