@@ -1,0 +1,339 @@
+.onboarding-page {
+    position: relative;
+    min-height: 100vh;
+    padding: var(--space-xl) var(--space-lg);
+    overflow: hidden;
+}
+
+.onboarding-container {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.onboarding-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: var(--space-xl);
+}
+
+.onboarding-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.onboarding-brand img {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+    object-fit: cover;
+}
+
+.onboarding-brand span {
+    color: var(--color-text-primary);
+
+    font-size: 1.2rem;
+    font-weight: var(--font-weight-semibold);
+
+    letter-spacing: 0.22em;
+}
+
+.onboarding-logout {
+    padding: 10px 16px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    background: rgba(19, 25, 34, 0.6);
+    color: var(--color-text-secondary);
+
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-medium);
+
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.onboarding-logout:hover {
+    color: var(--color-text-primary);
+
+    border-color: rgba(148, 163, 184, 0.3);
+
+    background: var(--color-surface);
+}
+
+/* Progress */
+
+.onboarding-progress {
+    margin-bottom: var(--space-lg);
+}
+
+.onboarding-progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-semibold);
+
+    letter-spacing: 0.14em;
+}
+
+.onboarding-progress-track {
+    width: 100%;
+    height: 4px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: rgba(148, 163, 184, 0.12);
+}
+
+.onboarding-progress-value {
+    width: 100%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--gradient-primary);
+
+    box-shadow:
+        0 0 18px rgba(124, 58, 237, 0.45);
+}
+
+/* Card */
+
+.onboarding-card {
+    padding: 44px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+
+    background: rgba(19, 25, 34, 0.72);
+
+    box-shadow: var(--shadow-card);
+
+    backdrop-filter: blur(20px);
+}
+
+.onboarding-heading {
+    margin-bottom: var(--space-xl);
+}
+
+.onboarding-eyebrow {
+    display: block;
+
+    margin-bottom: var(--space-md);
+
+    color: #818cf8;
+
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-semibold);
+
+    letter-spacing: 0.16em;
+}
+
+.onboarding-heading h1 {
+    margin-bottom: var(--space-sm);
+
+    color: var(--color-text-primary);
+
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    line-height: 1.15;
+
+    letter-spacing: -0.04em;
+}
+
+.onboarding-heading p {
+    max-width: 580px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* Form */
+
+.onboarding-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: var(--space-lg);
+}
+
+.onboarding-form>.nuvio-input-group:nth-child(1),
+.onboarding-form>.nuvio-input-group:nth-child(2),
+.onboarding-form>.onboarding-message,
+.onboarding-form>.nuvio-button {
+    grid-column: 1 / -1;
+}
+
+.onboarding-field {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-sm);
+}
+
+.onboarding-field label {
+    color: var(--color-text-primary);
+
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+}
+
+.onboarding-field select {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 0 var(--space-md);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: rgba(19, 25, 34, 0.8);
+    color: var(--color-text-primary);
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.onboarding-field select:hover {
+    border-color: rgba(148, 163, 184, 0.3);
+}
+
+.onboarding-field select:focus {
+    border-color: var(--color-primary);
+
+    background: var(--color-surface);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.onboarding-field select option {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+}
+
+/* Messages */
+
+.onboarding-message {
+    padding: 12px 14px;
+
+    border-radius: var(--radius-sm);
+
+    font-size: 0.8rem;
+}
+
+.onboarding-message.success {
+    border: 1px solid rgba(34, 197, 94, 0.2);
+
+    background: rgba(34, 197, 94, 0.08);
+
+    color: #4ade80;
+}
+
+.onboarding-message.error {
+    border: 1px solid rgba(239, 68, 68, 0.2);
+
+    background: rgba(239, 68, 68, 0.08);
+
+    color: #f87171;
+}
+
+/* Footer */
+
+.onboarding-footer {
+    margin-top: var(--space-lg);
+
+    color: var(--color-text-secondary);
+
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+/* Background Glow */
+
+.onboarding-glow {
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    filter: blur(130px);
+
+    pointer-events: none;
+}
+
+.onboarding-glow-left {
+    top: -300px;
+    left: -250px;
+
+    background: rgba(37, 99, 235, 0.16);
+}
+
+.onboarding-glow-right {
+    right: -250px;
+    bottom: -300px;
+
+    background: rgba(124, 58, 237, 0.14);
+}
+
+/* Responsive */
+
+@media (max-width: 640px) {
+    .onboarding-page {
+        padding: var(--space-lg) var(--space-md);
+    }
+
+    .onboarding-card {
+        padding: 30px 22px;
+    }
+
+    .onboarding-form {
+        grid-template-columns: 1fr;
+    }
+
+    .onboarding-form>* {
+        grid-column: 1 / -1;
+    }
+
+    .onboarding-header {
+        margin-bottom: var(--space-lg);
+    }
+
+    .onboarding-brand img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .onboarding-brand span {
+        font-size: 1rem;
+    }
+}

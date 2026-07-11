@@ -2,11 +2,11 @@ import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useAuth } from "../context/AuthContext";
 
-interface PublicRouteProps {
+interface OnboardingRouteProps {
     children: ReactNode;
 }
 
-function PublicRoute({ children }: PublicRouteProps) {
+function OnboardingRoute({ children }: OnboardingRouteProps) {
     const {
         isLoading,
         isAuthenticated,
@@ -17,15 +17,15 @@ function PublicRoute({ children }: PublicRouteProps) {
         return <p>Checking session...</p>;
     }
 
-    if (isAuthenticated) {
-        if (profile?.onboarding_completed) {
-            return <Navigate to="/dashboard" replace />;
-        }
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
 
-        return <Navigate to="/onboarding" replace />;
+    if (profile?.onboarding_completed) {
+        return <Navigate to="/dashboard" replace />;
     }
 
     return children;
 }
 
-export default PublicRoute;
+export default OnboardingRoute;

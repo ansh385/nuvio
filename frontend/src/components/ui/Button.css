@@ -1,0 +1,47 @@
+.nuvio-button {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--space-lg);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+
+  font-weight: var(--font-weight-semibold);
+
+  box-shadow: var(--shadow-primary);
+
+  cursor: pointer;
+
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-normal),
+    opacity var(--transition-fast);
+}
+
+.nuvio-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 16px 40px rgba(37, 99, 235, 0.3);
+}
+
+.nuvio-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.nuvio-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.nuvio-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

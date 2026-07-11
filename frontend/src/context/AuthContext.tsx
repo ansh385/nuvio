@@ -16,12 +16,23 @@ interface User {
     email?: string;
 }
 
+interface Profile {
+    id: string;
+    full_name: string | null;
+    career_goal: string | null;
+    experience_level: string | null;
+    daily_study_minutes: number | null;
+    onboarding_completed: boolean;
+}
+
 interface AuthContextType {
     user: User | null;
+    profile: Profile | null;
     isLoading: boolean;
     isAuthenticated: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<Profile | null>;
     logout: () => void;
+    refreshAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,16 +43,25 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User | null>(null);
+    const [profile, setProfile] = useState<Profile | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    async function refreshAuth() {
+        try {
+            const response = await getCurrentUser();
+
+            setUser(response.user);
+            setProfile(response.profile);
+        } catch {
+            setUser(null);
+            setProfile(null);
+        }
+    }
 
     useEffect(() => {
         async function validateSession() {
             try {
-                const response = await getCurrentUser();
-
-                setUser(response.user);
-            } catch {
-                setUser(null);
+                await refreshAuth();
             } finally {
                 setIsLoading(false);
             }
@@ -50,7 +70,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         validateSession();
     }, []);
 
-    async function login(email: string, password: string) {
+    async function login(
+        email: string,
+        password: string
+    ): Promise<Profile | null> {
         const response = await loginUser({
             email,
             password,
@@ -60,12 +83,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         localStorage.setItem("access_token", accessToken);
 
-        setUser(response.data.user);
+        const currentUserResponse = await getCurrentUser();
+
+        setUser(currentUserResponse.user);
+        setProfile(currentUserResponse.profile);
+
+        return currentUserResponse.profile;
     }
 
     function logout() {
         localStorage.removeItem("access_token");
+
         setUser(null);
+        setProfile(null);
     }
 
     const isAuthenticated = user !== null;
@@ -74,10 +104,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         <AuthContext.Provider
             value={{
                 user,
+                profile,
                 isLoading,
                 isAuthenticated,
                 login,
                 logout,
+                refreshAuth,
             }}
         >
             {children}
@@ -89,7 +121,9 @@ export function useAuth() {
     const context = useContext(AuthContext);
 
     if (!context) {
-        throw new Error("useAuth must be used inside AuthProvider");
+        throw new Error(
+            "useAuth must be used inside AuthProvider"
+        );
     }
 
     return context;

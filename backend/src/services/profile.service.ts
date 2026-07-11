@@ -34,3 +34,22 @@ export async function updateUserProfile(
 
     return data;
 }
+
+export async function getUserProfile(
+    userId: string,
+    accessToken: string
+) {
+    const supabase = createAuthenticatedSupabaseClient(accessToken);
+
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+}

@@ -1,0 +1,58 @@
+:root {
+    /* Brand Colors */
+    --color-background: #0d1117;
+    --color-surface: #131922;
+    --color-surface-elevated: #1a2230;
+
+    --color-primary: #2563eb;
+    --color-secondary: #7c3aed;
+    --color-accent: #a855f7;
+
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #94a3b8;
+    --color-border: rgba(148, 163, 184, 0.15);
+
+    /* Brand Gradients */
+    --gradient-primary: linear-gradient(135deg,
+            #2563eb 0%,
+            #7c3aed 55%,
+            #a855f7 100%);
+
+    --gradient-glow: linear-gradient(135deg,
+            rgba(37, 99, 235, 0.25),
+            rgba(168, 85, 247, 0.15));
+
+    /* Typography */
+    --font-primary: "Sora", sans-serif;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+
+    /* Shadows */
+    --shadow-card:
+        0 12px 40px rgba(0, 0, 0, 0.25);
+
+    --shadow-primary:
+        0 12px 32px rgba(37, 99, 235, 0.25);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+}

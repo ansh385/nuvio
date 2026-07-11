@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import { loginUser, signUpUser } from "../services/auth.service";
 import { authSchema } from "../validators/auth.validator";
+import { getUserProfile } from "../services/profile.service";
 
 export async function signUp(
     req: Request,
@@ -43,12 +44,36 @@ export async function login(
 }
 
 export async function getCurrentUser(
-    _req: Request,
-    res: Response
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) {
-    return res.status(200).json({
-        success: true,
-        message: "Authenticated user retrieved successfully",
-        user: res.locals.user,
-    });
+    try {
+        const user = res.locals.user;
+
+        const authorizationHeader = req.headers.authorization;
+
+        if (!authorizationHeader) {
+            return res.status(401).json({
+                success: false,
+                message: "Authentication required",
+            });
+        }
+
+        const accessToken = authorizationHeader.replace("Bearer ", "");
+
+        const profile = await getUserProfile(
+            user.id,
+            accessToken
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Authenticated user retrieved successfully",
+            user,
+            profile,
+        });
+    } catch (error) {
+        next(error);
+    }
 }

@@ -78,3 +78,31 @@ export async function getCurrentUser() {
 
     return data;
 }
+
+export async function getNextStep() {
+    const accessToken = localStorage.getItem("access_token");
+
+    if (!accessToken) {
+        throw new Error("Authentication required");
+    }
+
+    const response = await fetch(
+        `${API_BASE_URL}/journey/next-step`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            data.message || "Failed to load next step"
+        );
+    }
+
+    return data;
+}

@@ -1,8 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import OnboardingPage from "./pages/OnboardingPage";
+import DashboardPage from "./pages/DashboardPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import OnboardingRoute from "./components/OnboardingRoute";
 
 function App() {
   return (
@@ -21,11 +23,22 @@ function App() {
       <Route
         path="/onboarding"
         element={
-          <ProtectedRoute>
+          <OnboardingRoute>
             <OnboardingPage />
+          </OnboardingRoute>
+        }
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
           </ProtectedRoute>
         }
       />
+
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
