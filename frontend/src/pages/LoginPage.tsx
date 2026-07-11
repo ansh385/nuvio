@@ -1,34 +1,33 @@
 import { useState } from "react";
-import { loginUser } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function LoginPage() {
+    const navigate = useNavigate();
+    const { login } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         try {
-            setMessage("Logging in...");
+            setIsLoading(true);
+            setMessage("");
 
-            const response = await loginUser({
-                email,
-                password,
-            });
+            await login(email, password);
 
-            const accessToken = response.data.session.access_token;
-
-            localStorage.setItem("access_token", accessToken);
-
-            setMessage("Login successful");
-
-            console.log("Login response:", response);
+            navigate("/onboarding");
         } catch (error) {
             const message =
                 error instanceof Error ? error.message : "Login failed";
 
             setMessage(message);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -61,7 +60,9 @@ function LoginPage() {
                     />
                 </div>
 
-                <button type="submit">Login</button>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Logging in..." : "Login"}
+                </button>
             </form>
 
             {message && <p>{message}</p>}

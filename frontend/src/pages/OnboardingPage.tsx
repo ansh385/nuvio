@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { completeOnboarding } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 function OnboardingPage() {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
     const [formData, setFormData] = useState({
         full_name: "",
         career_goal: "",
@@ -12,7 +17,14 @@ function OnboardingPage() {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    function handleLogout() {
+        logout();
+        navigate("/login");
+    }
+
+    async function handleSubmit(
+        event: React.FormEvent<HTMLFormElement>
+    ) {
         event.preventDefault();
 
         try {
@@ -24,7 +36,9 @@ function OnboardingPage() {
             setMessage("Onboarding completed successfully");
         } catch (error) {
             const message =
-                error instanceof Error ? error.message : "Onboarding failed";
+                error instanceof Error
+                    ? error.message
+                    : "Onboarding failed";
 
             setMessage(message);
         } finally {
@@ -34,13 +48,19 @@ function OnboardingPage() {
 
     return (
         <main>
+            <button type="button" onClick={handleLogout}>
+                Logout
+            </button>
+
             <h1>Tell us about yourself</h1>
 
             <p>Help Nuvio understand your goals and experience.</p>
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="full_name">Full Name</label>
+                    <label htmlFor="full_name">
+                        Full Name
+                    </label>
 
                     <input
                         id="full_name"
@@ -56,7 +76,9 @@ function OnboardingPage() {
                 </div>
 
                 <div>
-                    <label htmlFor="career_goal">Career Goal</label>
+                    <label htmlFor="career_goal">
+                        Career Goal
+                    </label>
 
                     <input
                         id="career_goal"
@@ -86,9 +108,17 @@ function OnboardingPage() {
                             })
                         }
                     >
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
+                        <option value="Beginner">
+                            Beginner
+                        </option>
+
+                        <option value="Intermediate">
+                            Intermediate
+                        </option>
+
+                        <option value="Advanced">
+                            Advanced
+                        </option>
                     </select>
                 </div>
 
@@ -106,14 +136,21 @@ function OnboardingPage() {
                         onChange={(event) =>
                             setFormData({
                                 ...formData,
-                                daily_study_minutes: Number(event.target.value),
+                                daily_study_minutes: Number(
+                                    event.target.value
+                                ),
                             })
                         }
                     />
                 </div>
 
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? "Saving..." : "Complete Onboarding"}
+                <button
+                    type="submit"
+                    disabled={isLoading}
+                >
+                    {isLoading
+                        ? "Saving..."
+                        : "Complete Onboarding"}
                 </button>
             </form>
 

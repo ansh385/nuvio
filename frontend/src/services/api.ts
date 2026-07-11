@@ -54,3 +54,27 @@ export async function completeOnboarding(onboardingData: OnboardingData) {
 
     return data;
 }
+
+export async function getCurrentUser() {
+    const accessToken = localStorage.getItem("access_token");
+
+    if (!accessToken) {
+        throw new Error("Authentication required");
+    }
+
+    const response = await fetch(`${API_BASE_URL}/auth/me`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        localStorage.removeItem("access_token");
+        throw new Error(data.message || "Session expired");
+    }
+
+    return data;
+}
