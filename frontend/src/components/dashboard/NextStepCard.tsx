@@ -1,4 +1,3 @@
-import Button from "../ui/Button";
 import "./NextStepCard.css";
 
 interface NextStep {
@@ -14,54 +13,139 @@ interface NextStepCardProps {
 
 function NextStepCard({ nextStep }: NextStepCardProps) {
     return (
-        <section className="next-step-card">
-            <div className="next-step-content">
-                <span className="next-step-eyebrow">
-                    YOUR NEXT STEP
+        <section className="guidance-card">
+            <div className="guidance-card-grid" />
+
+            <header className="guidance-card-header">
+                <div className="guidance-status">
+                    <span className="guidance-status-light" />
+
+                    <div>
+                        <small>ACTIVE SIGNAL</small>
+                        <strong>YOUR NEXT STEP</strong>
+                    </div>
+                </div>
+
+                <span className="guidance-id">
+                    NV-GUIDE / 001
                 </span>
+            </header>
+
+            <div className="guidance-content">
+                <div className="guidance-index">
+                    <span>01</span>
+                    <div />
+                    <span>RECOMMENDED ACTION</span>
+                </div>
 
                 <h2>{nextStep.title}</h2>
 
-                <p className="next-step-description">
+                <p className="guidance-description">
                     {nextStep.description}
                 </p>
 
-                <div className="next-step-meta">
-                    <div className="next-step-meta-item">
-                        <span>DAILY FOCUS</span>
+                <div className="guidance-data">
+                    <div className="guidance-data-item">
+                        <span>TIME ALLOCATION</span>
+
                         <strong>
-                            {nextStep.estimated_minutes} min
+                            {nextStep.estimated_minutes}
+                            <small> MIN</small>
                         </strong>
                     </div>
 
-                    <div className="next-step-meta-item">
-                        <span>STATUS</span>
-                        <strong>Ready to start</strong>
+                    <div className="guidance-data-divider" />
+
+                    <div className="guidance-data-item">
+                        <span>SIGNAL STATUS</span>
+
+                        <strong className="ready-status">
+                            <span />
+                            READY
+                        </strong>
+                    </div>
+
+                    <div className="guidance-data-divider" />
+
+                    <div className="guidance-data-item">
+                        <span>PRIORITY</span>
+
+                        <strong>PRIMARY</strong>
                     </div>
                 </div>
 
-                <div className="next-step-action">
-                    <Button type="button">
+                <button
+                    type="button"
+                    className="guidance-action"
+                >
+                    <span className="guidance-action-content">
+                        <span className="guidance-action-pulse" />
+
                         {nextStep.action_label}
-                    </Button>
-                </div>
+                    </span>
+
+                    <span className="guidance-action-arrow">
+                        →
+                    </span>
+                </button>
             </div>
 
             <div
-                className="next-step-path"
+                className="guidance-path-system"
                 aria-hidden="true"
             >
-                <div className="next-step-node completed" />
-
-                <div className="next-step-line" />
-
-                <div className="next-step-node current">
-                    <span>1</span>
+                <div className="path-system-label">
+                    <span>PATH SIGNAL</span>
+                    <span>01 / 03</span>
                 </div>
 
-                <div className="next-step-line inactive" />
+                <div className="path-system-visual">
+                    <div className="path-trace" />
 
-                <div className="next-step-node" />
+                    <div className="path-checkpoint completed">
+                        <span className="checkpoint-node">
+                            ✓
+                        </span>
+
+                        <div>
+                            <small>PROFILE</small>
+                            <strong>CALIBRATED</strong>
+                        </div>
+                    </div>
+
+                    <div className="path-checkpoint current">
+                        <span className="checkpoint-node">
+                            01
+                        </span>
+
+                        <div>
+                            <small>CURRENT</small>
+                            <strong>NEXT STEP</strong>
+                        </div>
+                    </div>
+
+                    <div className="path-checkpoint locked">
+                        <span className="checkpoint-node">
+                            02
+                        </span>
+
+                        <div>
+                            <small>AWAITING</small>
+                            <strong>NEXT SIGNAL</strong>
+                        </div>
+                    </div>
+
+                    <span className="path-moving-signal" />
+                </div>
+
+                <div className="path-system-footer">
+                    <span>GUIDANCE ENGINE</span>
+
+                    <span className="path-processing">
+                        <span />
+                        PROCESSING CONTINUOUSLY
+                    </span>
+                </div>
             </div>
         </section>
     );

@@ -1,22 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import Button from "../components/ui/Button";
-import Input from "../components/ui/Input";
 import "./LoginPage.css";
 
 function LoginPage() {
     const navigate = useNavigate();
-    const { login } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const { login } = useAuth();
 
-    async function handleSubmit(
-        event: React.FormEvent<HTMLFormElement>
-    ) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         try {
@@ -26,9 +22,9 @@ function LoginPage() {
             const profile = await login(email, password);
 
             if (profile?.onboarding_completed) {
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
             } else {
-                navigate("/onboarding");
+                navigate("/onboarding", { replace: true });
             }
         } catch (error) {
             const errorMessage =
@@ -44,80 +40,206 @@ function LoginPage() {
 
     return (
         <main className="login-page">
-            <div className="login-glow login-glow-left" />
-            <div className="login-glow login-glow-right" />
+            <section className="signal-section">
+                <div className="signal-grid" />
 
-            <section className="login-container">
-                <header className="login-brand">
-                    <img src="/brand/nuvio-mark.png" alt="Nuvio" />
+                <header className="signal-header">
+                    <div className="signal-brand">
+                        <div className="signal-logo">N</div>
 
-                    <span className="login-brand-name">
-                        NUVIO
-                    </span>
+                        <div>
+                            <span className="signal-name">NUVIO</span>
+                            <span className="signal-version">SYSTEM / 01</span>
+                        </div>
+                    </div>
+
+                    <div className="system-status">
+                        <span className="system-status-dot" />
+                        SYSTEM ONLINE
+                    </div>
                 </header>
 
-                <div className="login-card">
-                    <div className="login-heading">
-                        <span className="login-eyebrow">
-                            YOUR NEXT STEP STARTS HERE
-                        </span>
+                <div className="signal-content">
+                    <div className="signal-code">
+                        <span>NV://GUIDANCE_SYSTEM</span>
+                        <span>NODE_ID 01</span>
+                    </div>
 
-                        <h1>Welcome back</h1>
+                    <h1>
+                        Find the signal.
+                        <span>Build your path.</span>
+                    </h1>
+
+                    <p className="signal-description">
+                        Personalized developer guidance powered by your goals,
+                        skills, progress, and direction.
+                    </p>
+
+                    <div className="network-system">
+                        <div className="circuit circuit-one" />
+                        <div className="circuit circuit-two" />
+                        <div className="circuit circuit-three" />
+
+                        <div className="network-node node-input">
+                            <span className="node-light" />
+
+                            <div>
+                                <small>INPUT</small>
+                                <strong>YOU</strong>
+                            </div>
+                        </div>
+
+                        <div className="network-node node-profile">
+                            <span className="node-light" />
+
+                            <div>
+                                <small>ANALYZE</small>
+                                <strong>PROFILE</strong>
+                            </div>
+                        </div>
+
+                        <div className="network-node node-guidance">
+                            <span className="node-light active-light" />
+
+                            <div>
+                                <small>PROCESS</small>
+                                <strong>GUIDANCE</strong>
+                            </div>
+                        </div>
+
+                        <div className="network-node node-output">
+                            <span className="node-light output-light" />
+
+                            <div>
+                                <small>OUTPUT</small>
+                                <strong>NEXT STEP</strong>
+                            </div>
+                        </div>
+
+                        <span className="signal-pulse signal-pulse-one" />
+                        <span className="signal-pulse signal-pulse-two" />
+                    </div>
+                </div>
+
+                <footer className="signal-footer">
+                    <span>SECURE CONNECTION</span>
+                    <span>256-BIT SESSION</span>
+                    <span>KNOW YOUR NEXT STEP.</span>
+                </footer>
+            </section>
+
+            <section className="auth-section">
+                <div className="auth-top-line">
+                    <span>AUTH_GATEWAY</span>
+
+                    <span className="auth-id">NV-01</span>
+                </div>
+
+                <div className="auth-container">
+                    <div className="mobile-brand">
+                        <div className="signal-logo">N</div>
+
+                        <span>NUVIO</span>
+                    </div>
+
+                    <div className="auth-heading">
+                        <div className="auth-index">
+                            <span>01</span>
+                            <div />
+                            <span>ACCESS</span>
+                        </div>
+
+                        <h2>Welcome back.</h2>
 
                         <p>
-                            Continue your journey with personalized
-                            guidance built around your goals.
+                            Authenticate to continue your developer journey.
                         </p>
                     </div>
 
-                    <form
-                        className="login-form"
-                        onSubmit={handleSubmit}
-                    >
-                        <Input
-                            id="email"
-                            label="Email address"
-                            type="email"
-                            placeholder="you@example.com"
-                            autoComplete="email"
-                            value={email}
-                            onChange={(event) =>
-                                setEmail(event.target.value)
-                            }
-                            required
-                        />
+                    <form className="login-form" onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <div className="input-header">
+                                <label htmlFor="email">IDENTITY</label>
+                                <span>01</span>
+                            </div>
 
-                        <Input
-                            id="password"
-                            label="Password"
-                            type="password"
-                            placeholder="Enter your password"
-                            autoComplete="current-password"
-                            value={password}
-                            onChange={(event) =>
-                                setPassword(event.target.value)
-                            }
-                            required
-                        />
+                            <div className="input-shell">
+                                <span className="input-prefix">&gt;_</span>
+
+                                <input
+                                    id="email"
+                                    type="email"
+                                    placeholder="developer@email.com"
+                                    value={email}
+                                    onChange={(event) => setEmail(event.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <div className="input-header">
+                                <label htmlFor="password">ACCESS KEY</label>
+                                <span>02</span>
+                            </div>
+
+                            <div className="input-shell">
+                                <span className="input-prefix">#</span>
+
+                                <input
+                                    id="password"
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    value={password}
+                                    onChange={(event) => setPassword(event.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
 
                         {message && (
-                            <p className="login-message">
+                            <div className="login-message">
+                                <span>!</span>
                                 {message}
-                            </p>
+                            </div>
                         )}
 
-                        <Button
+                        <button
+                            className="login-button"
                             type="submit"
-                            isLoading={isLoading}
+                            disabled={isLoading}
                         >
-                            Continue to Nuvio
-                        </Button>
+                            <span className="button-status">
+                                <span className="button-dot" />
+
+                                {isLoading
+                                    ? "AUTHENTICATING..."
+                                    : "INITIALIZE SESSION"}
+                            </span>
+
+                            {!isLoading && (
+                                <span className="button-arrow">→</span>
+                            )}
+                        </button>
                     </form>
+
+                    <div className="auth-security">
+                        <div className="security-line" />
+
+                        <div className="security-content">
+                            <span className="security-dot" />
+
+                            <span>
+                                CONNECTION READY
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
-                <p className="login-tagline">
-                    Know your next step.
-                </p>
+                <div className="auth-corner">
+                    <span>35.00</span>
+                    <span>72.00</span>
+                </div>
             </section>
         </main>
     );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import type { ReactNode } from "react";
 import { getCurrentUser } from "../services/api";
 
@@ -8,12 +8,16 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
+    const location = useLocation();
+
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         async function checkAuthentication() {
             try {
+                setIsLoading(true);
+
                 await getCurrentUser();
 
                 setIsAuthenticated(true);
@@ -25,7 +29,7 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
         }
 
         checkAuthentication();
-    }, []);
+    }, [location.pathname]);
 
     if (isLoading) {
         return <p>Checking session...</p>;

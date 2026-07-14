@@ -4,31 +4,70 @@ import "./DashboardHeader.css";
 function DashboardHeader() {
     const { profile } = useAuth();
 
-    const firstName = profile?.full_name?.split(" ")[0] || "Developer";
+    const firstName =
+        profile?.full_name?.split(" ")[0] || "Developer";
+
+    const initial =
+        firstName.charAt(0).toUpperCase();
 
     return (
-        <header className="dashboard-header">
-            <div className="dashboard-header-content">
-                <span className="dashboard-header-eyebrow">
-                    YOUR JOURNEY
-                </span>
+        <header className="command-header">
+            <div className="command-header-content">
+                <div className="command-header-index">
+                    <span>03</span>
 
-                <h1>Welcome back, {firstName}</h1>
+                    <div />
+
+                    <span>COMMAND CENTER</span>
+                </div>
+
+                <h1>
+                    Welcome back,
+                    <span>{firstName}.</span>
+                </h1>
 
                 <p>
-                    Stay focused on what matters. Here’s your next step.
+                    Your profile is calibrated. Nuvio is tracking your
+                    direction and preparing the next signal.
                 </p>
             </div>
 
-            <div className="dashboard-profile">
-                <div className="dashboard-profile-avatar">
-                    {firstName.charAt(0).toUpperCase()}
+            <div className="command-header-profile">
+                <div className="profile-connection">
+                    <span className="profile-connection-dot" />
+
+                    <div>
+                        <small>IDENTITY CONNECTED</small>
+                        <strong>SESSION ACTIVE</strong>
+                    </div>
                 </div>
 
-                <div className="dashboard-profile-info">
-                    <span>{profile?.full_name || "Developer"}</span>
+                <div className="command-profile-card">
+                    <div className="command-profile-avatar">
+                        <span>{initial}</span>
 
-                    <p>{profile?.experience_level || "Beginner"}</p>
+                        <div className="avatar-signal" />
+                    </div>
+
+                    <div className="command-profile-info">
+                        <span>
+                            {profile?.full_name || "Developer"}
+                        </span>
+
+                        <div>
+                            <small>
+                                {profile?.experience_level || "Beginner"}
+                            </small>
+
+                            <span />
+
+                            <small>CALIBRATED</small>
+                        </div>
+                    </div>
+
+                    <span className="profile-card-id">
+                        ID
+                    </span>
                 </div>
             </div>
         </header>
