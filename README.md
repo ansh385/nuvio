@@ -1,97 +1,79 @@
-# 🚀 Nuvio
-
 <div align="center">
 
-<img src="frontend/public/brand/nuvio-mark.png" width="120" alt="Nuvio Logo"/>
+<img src="frontend/public/brand/nuvio-mark.png" width="120" alt="Nuvio Logo">
 
-### **Know your next step.**
+# Nuvio
 
-**Your AI-powered developer mentor that guides you from learning to getting hired.**
+### Know your next step.
+
+**AI-powered developer guidance from learning to getting hired.**
+
+---
 
 ![Status](https://img.shields.io/badge/Status-Active-success)
-![Version](https://img.shields.io/badge/Version-v0.1.0-blue)
+![Version](https://img.shields.io/badge/Version-v1.0.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-orange)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
-![React](https://img.shields.io/badge/React-19-61DAFB)
-![Node.js](https://img.shields.io/badge/Node.js-22-339933)
 
 </div>
 
 ---
 
-# 📖 Overview
+# 🚀 About Nuvio
 
-Nuvio is an AI-powered career guidance platform built for aspiring software developers.
+Nuvio is an AI-powered platform built to guide aspiring software developers throughout their learning journey.
 
-Instead of showing random tutorials or generic roadmaps, Nuvio analyzes each user's goals, experience, and progress to generate personalized learning paths, recommend the next best step, and keep users focused on becoming job-ready.
+Instead of overwhelming users with endless tutorials and scattered roadmaps, Nuvio provides personalized guidance, structured learning paths, project recommendations, and career-focused mentoring based on each user's goals and progress.
 
----
+Our mission is simple:
 
-# ✨ Features
-
-## 🔐 Authentication
-
-- User Registration
-- Secure Login
-- Forgot Password
-- Password Reset
-- Protected Routes
-- Session Management
+> **Help every developer know their next step.**
 
 ---
 
-## 👤 User Onboarding
+# ✨ Core Features
 
-- Full Name
-- Career Goal
-- Experience Level
-- Daily Study Time
-- Personalized Profile
-
----
-
-## 📊 Dashboard
-
-- Personalized Welcome
-- Progress Overview
-- Next Step Card
-- Journey Status
+- 🤖 AI Developer Mentor
+- 🗺️ Personalized Learning Roadmaps
+- 🎯 Daily Next-Step Recommendations
+- 📈 Progress Tracking
+- 💼 Career Guidance
+- 📚 Curated Learning Resources
+- 🚀 Project Recommendations
+- 🎤 Interview Preparation
+- 🔒 Secure Authentication
+- 👤 Personalized Developer Profiles
 
 ---
 
-## 🧠 AI Guidance *(Coming Soon)*
+# 🌍 Vision
 
-- AI Mentor
-- Personalized Roadmaps
-- Learning Recommendations
-- Career Guidance
-- Project Suggestions
-- Interview Preparation
+Learning to code shouldn't feel confusing.
+
+Nuvio aims to become the personal mentor every developer wishes they had—guiding learners from their first line of code to their first software engineering job.
 
 ---
 
-# 🛠 Tech Stack
+# 🛠 Technology Stack
 
-## Frontend
+### Frontend
 
 - React
 - TypeScript
-- React Router
-- CSS3
 - Vite
+- React Router
 
-## Backend
+### Backend
 
 - Node.js
 - Express
 - TypeScript
 
-## Database & Authentication
+### Database
 
 - Supabase
 - PostgreSQL
 
-## Development
+### Tools
 
 - Git
 - GitHub
@@ -99,115 +81,28 @@ Instead of showing random tutorials or generic roadmaps, Nuvio analyzes each use
 
 ---
 
-# 📂 Project Structure
+# 📈 Roadmap
 
-```text
-nuvio/
-│
-├── backend/
-│   ├── src/
-│   ├── controllers/
-│   ├── routes/
-│   ├── services/
-│   ├── middleware/
-│   └── validators/
-│
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── context/
-│   ├── pages/
-│   ├── services/
-│   └── assets/
-│
-├── README.md
-└── LICENSE
-```
-
----
-
-# 🚀 Getting Started
-
-## Clone Repository
-
-```bash
-git clone https://github.com/ansh385/nuvio.git
-```
-
-```bash
-cd nuvio
-```
-
----
-
-## Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
----
-
-## Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
-# 🔑 Environment Variables
-
-## Backend
-
-```env
-SUPABASE_URL=YOUR_SUPABASE_URL
-SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-```
-
----
-
-## Frontend
-
-```env
-VITE_SUPABASE_URL=YOUR_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-```
-
----
-
-# 📈 Development Roadmap
-
-## ✅ Phase 1
+### ✅ Phase 1
 
 - Authentication
-- User Onboarding
-- Dashboard Foundation
+- User Profiles
+- Onboarding
+- Dashboard
 
----
-
-## 🚧 Phase 2
+### 🚧 Phase 2
 
 - Guidance Engine
-- Learning Journey
+- Personalized Learning Journey
 - Progress Tracking
 
----
-
-## 🔜 Phase 3
+### 🔜 Phase 3
 
 - AI Mentor
 - AI Roadmap Generator
-- AI Chat
-- Personalized Recommendations
+- Smart Recommendations
 
----
-
-## 🔮 Phase 4
+### 🌎 Phase 4
 
 - Community
 - Resume Review
@@ -216,54 +111,40 @@ VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 
 ---
 
+# 💡 Philosophy
+
+Technology changes.
+
+Learning paths change.
+
+Jobs change.
+
+But one thing never changes:
+
+> Every developer deserves to know their next step.
+
+---
+
 # 🤝 Contributing
 
-Contributions are welcome.
+Contributions, ideas, and feedback are always welcome.
 
-1. Fork the repository
-2. Create a feature branch
-
-```bash
-git checkout -b feature/feature-name
-```
-
-3. Commit your changes
-
-```bash
-git commit -m "feat: add feature"
-```
-
-4. Push
-
-```bash
-git push origin feature/feature-name
-```
-
-5. Open a Pull Request
+Please open an issue or submit a pull request to help improve Nuvio.
 
 ---
 
 # 📄 License
 
-This project is licensed under the MIT License.
-
----
-
-# 👨‍💻 Author
-
-**Ansh Gajjar**
-
-Computer Engineering Student
-
-GitHub:
-https://github.com/ansh385
+Licensed under the MIT License.
 
 ---
 
 <div align="center">
 
-### ⭐ If you like Nuvio, consider starring the repository!
+## Built with ❤️ by Ansh Gajjar
 
-**Building the future of personalized developer guidance.**
+### ⭐ If you believe in the vision, consider starring the repository.
+
+**Know your next step.**
 
 </div>
