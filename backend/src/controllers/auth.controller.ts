@@ -1,5 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import { loginUser, signUpUser } from "../services/auth.service";
+import {
+    forgotPassword,
+    loginUser,
+    signUpUser,
+} from "../services/auth.service";
 import { authSchema } from "../validators/auth.validator";
 import { getUserProfile } from "../services/profile.service";
 
@@ -37,6 +41,25 @@ export async function login(
             success: true,
             message: "Login successful",
             data,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export async function forgotPasswordController(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const { email } = req.body;
+
+        await forgotPassword(email);
+
+        return res.status(200).json({
+            success: true,
+            message: "Password reset email sent successfully",
         });
     } catch (error) {
         next(error);

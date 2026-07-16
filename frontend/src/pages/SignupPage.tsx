@@ -1,16 +1,37 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import "./LoginPage.css";
+import { signupUser } from "../services/api";
+import "./SignupPage.css";
 
-function LoginPage() {
+function SignupPage() {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] =
+        useState(false);
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const { login } = useAuth();
+
+    function getPasswordStrength(password: string) {
+        if (password.length < 6) return "Weak";
+
+        if (
+            password.length >= 8 &&
+            /[A-Z]/.test(password) &&
+            /[0-9]/.test(password)
+        ) {
+            return "Strong";
+        }
+
+        return "Medium";
+    }
+
+    const passwordStrength =
+        getPasswordStrength(password);
+
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -19,13 +40,27 @@ function LoginPage() {
             setIsLoading(true);
             setMessage("");
 
-            const profile = await login(email, password);
-
-            if (profile?.onboarding_completed) {
-                navigate("/dashboard", { replace: true });
-            } else {
-                navigate("/onboarding", { replace: true });
+            if (password !== confirmPassword) {
+                setMessage("Passwords do not match");
+                return;
             }
+
+            await signupUser({
+                email,
+                password,
+            });
+
+            setMessage(
+                "✅ Account created successfully. Redirecting..."
+            );
+
+            setTimeout(() => {
+                navigate("/login", {
+                    replace: true,
+                });
+            }, 1200);
+
+
         } catch (error) {
             const errorMessage =
                 error instanceof Error
@@ -130,7 +165,7 @@ function LoginPage() {
 
             <section className="auth-section">
                 <div className="auth-top-line">
-                    <span>AUTH_GATEWAY</span>
+                    <span>REGISTRATION</span>
 
                     <span className="auth-id">NV-01</span>
                 </div>
@@ -144,15 +179,15 @@ function LoginPage() {
 
                     <div className="auth-heading">
                         <div className="auth-index">
-                            <span>01</span>
+                            <span>02</span>
                             <div />
-                            <span>ACCESS</span>
+                            <span>REGISTRATION</span>
                         </div>
 
-                        <h2>Welcome back.</h2>
+                        <h2>Create your account.</h2>
 
                         <p>
-                            Authenticate to continue your developer journey.
+                            Join Nuvio and start your personalized developer journey.
                         </p>
                     </div>
 
@@ -188,20 +223,75 @@ function LoginPage() {
 
                                 <input
                                     id="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
                                     value={password}
                                     onChange={(event) => setPassword(event.target.value)}
                                     required
                                 />
+                                <button
+                                    type="button"
+                                    className="password-toggle"
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
+                                >
+                                    {showPassword ? "🙈" : "👁"}
+                                </button>
                             </div>
                         </div>
 
-                        <div className="forgot-password-link">
-                            <Link to="/forgot-password">
-                                Forgot Password?
-                            </Link>
+                        <div className="form-group">
+                            <div className="input-header">
+                                <label htmlFor="confirmPassword">
+                                    CONFIRM PASSWORD
+                                </label>
+                                <span>03</span>
+                            </div>
+
+                            <div className="input-shell">
+                                <span className="input-prefix">#</span>
+
+                                <input
+                                    id="confirmPassword"
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    placeholder="Confirm your password"
+                                    value={confirmPassword}
+                                    onChange={(event) =>
+                                        setConfirmPassword(event.target.value)
+                                    }
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="password-toggle"
+                                    onClick={() =>
+                                        setShowConfirmPassword(
+                                            !showConfirmPassword
+                                        )
+                                    }
+                                >
+                                    {showConfirmPassword ? "🙈" : "👁"}
+                                </button>
+                            </div>
+
                         </div>
+                        {confirmPassword && (
+                            <div className="password-match">
+                                {password === confirmPassword
+                                    ? "✅ Passwords match"
+                                    : "❌ Passwords do not match"}
+                            </div>
+                        )}
+                        {password && (
+                            <div className="password-strength">
+                                Password Strength:{""}
+
+                                <strong className={passwordStrength.toLowerCase()}>
+                                    {passwordStrength}
+                                </strong>
+                            </div>
+                        )}
 
                         {message && (
                             <div className="login-message">
@@ -219,8 +309,8 @@ function LoginPage() {
                                 <span className="button-dot" />
 
                                 {isLoading
-                                    ? "AUTHENTICATING..."
-                                    : "INITIALIZE SESSION"}
+                                    ? "CREATING ACCOUNT..."
+                                    : "CREATE ACCOUNT"}
                             </span>
 
                             {!isLoading && (
@@ -241,10 +331,10 @@ function LoginPage() {
                         </div>
                     </div>
                     <div className="auth-switch">
-                        <span>New to Nuvio?</span>
+                        <span>Already have an account?</span>
 
-                        <Link to="/signup">
-                            Create Account →
+                        <Link to="/login">
+                            Sign In →
                         </Link>
                     </div>
                 </div>
@@ -260,4 +350,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default SignupPage;

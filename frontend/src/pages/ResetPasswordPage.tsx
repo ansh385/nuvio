@@ -1,38 +1,48 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import "./LoginPage.css";
+import { updatePassword } from "../services/api";
+import "./SignupPage.css";
 
-function LoginPage() {
+function ResetPasswordPage() {
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] =
+        useState("");
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const { login } = useAuth();
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(
+        event: React.FormEvent<HTMLFormElement>
+    ) {
         event.preventDefault();
+
+        if (password !== confirmPassword) {
+            setMessage("Passwords do not match");
+            return;
+        }
 
         try {
             setIsLoading(true);
             setMessage("");
 
-            const profile = await login(email, password);
+            await updatePassword(password);
 
-            if (profile?.onboarding_completed) {
-                navigate("/dashboard", { replace: true });
-            } else {
-                navigate("/onboarding", { replace: true });
-            }
+            setMessage(
+                "Password updated successfully."
+            );
+
+            setTimeout(() => {
+                navigate("/login", {
+                    replace: true,
+                });
+            }, 1500);
         } catch (error) {
-            const errorMessage =
+            setMessage(
                 error instanceof Error
                     ? error.message
-                    : "Login failed";
-
-            setMessage(errorMessage);
+                    : "Failed to update password"
+            );
         } finally {
             setIsLoading(false);
         }
@@ -45,7 +55,7 @@ function LoginPage() {
 
                 <header className="signal-header">
                     <div className="signal-brand">
-                        <img src="/brand/nuvio-mark.png" alt="Nuvio Logo" className="signal-logo" />
+                        <img className="signal-logo" src="/brand/nuvio-mark.png" alt="Nuvio Logo" />
 
                         <div>
                             <span className="signal-name">NUVIO</span>
@@ -129,49 +139,65 @@ function LoginPage() {
             </section>
 
             <section className="auth-section">
-                <div className="auth-top-line">
-                    <span>AUTH_GATEWAY</span>
 
+                <div className="auth-top-line">
+                    <span>PASSWORD RESET</span>
                     <span className="auth-id">NV-01</span>
                 </div>
 
+                <div className="auth-container"></div>
                 <div className="auth-container">
                     <div className="mobile-brand">
-                        <div className="signal-logo">N</div>
+                        <img
+                            className="signal-logo"
+                            src="/brand/nuvio-mark.png"
+                            alt="Nuvio Logo"
+                        />
 
                         <span>NUVIO</span>
                     </div>
-
                     <div className="auth-heading">
-                        <div className="auth-index">
-                            <span>01</span>
-                            <div />
-                            <span>ACCESS</span>
-                        </div>
 
-                        <h2>Welcome back.</h2>
+                        <div className="auth-index">
+                            <span>03</span>
+                            <div />
+                            <span>RECOVERY</span>
+                        </div>
+                        <h2>Reset your password.</h2>
 
                         <p>
-                            Authenticate to continue your developer journey.
+                            Create a new password for your Nuvio account.
                         </p>
                     </div>
 
-                    <form className="login-form" onSubmit={handleSubmit}>
+                    <form
+                        className="login-form"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="form-group">
                             <div className="input-header">
-                                <label htmlFor="email">IDENTITY</label>
+                                <label htmlFor="password">
+                                    NEW PASSWORD
+                                </label>
+
                                 <span>01</span>
                             </div>
 
                             <div className="input-shell">
-                                <span className="input-prefix">&gt;_</span>
+                                <span className="input-prefix">
+                                    #
+                                </span>
 
                                 <input
-                                    id="email"
-                                    type="email"
-                                    placeholder="developer@email.com"
-                                    value={email}
-                                    onChange={(event) => setEmail(event.target.value)}
+                                    id="password"
+                                    type="password"
+                                    placeholder="Enter new password"
+                                    value={password}
+                                    onChange={(event) =>
+                                        setPassword(
+                                            event.target.value
+                                        )
+                                    }
                                     required
                                 />
                             </div>
@@ -179,33 +205,35 @@ function LoginPage() {
 
                         <div className="form-group">
                             <div className="input-header">
-                                <label htmlFor="password">ACCESS KEY</label>
+                                <label htmlFor="confirmPassword">
+                                    CONFIRM PASSWORD
+                                </label>
+
                                 <span>02</span>
                             </div>
 
                             <div className="input-shell">
-                                <span className="input-prefix">#</span>
+                                <span className="input-prefix">
+                                    #
+                                </span>
 
                                 <input
-                                    id="password"
+                                    id="confirmPassword"
                                     type="password"
-                                    placeholder="Enter your password"
-                                    value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
+                                    placeholder="Confirm new password"
+                                    value={confirmPassword}
+                                    onChange={(event) =>
+                                        setConfirmPassword(
+                                            event.target.value
+                                        )
+                                    }
                                     required
                                 />
                             </div>
                         </div>
 
-                        <div className="forgot-password-link">
-                            <Link to="/forgot-password">
-                                Forgot Password?
-                            </Link>
-                        </div>
-
                         {message && (
                             <div className="login-message">
-                                <span>!</span>
                                 {message}
                             </div>
                         )}
@@ -215,17 +243,9 @@ function LoginPage() {
                             type="submit"
                             disabled={isLoading}
                         >
-                            <span className="button-status">
-                                <span className="button-dot" />
-
-                                {isLoading
-                                    ? "AUTHENTICATING..."
-                                    : "INITIALIZE SESSION"}
-                            </span>
-
-                            {!isLoading && (
-                                <span className="button-arrow">→</span>
-                            )}
+                            {isLoading
+                                ? "UPDATING PASSWORD..."
+                                : "UPDATE PASSWORD"}
                         </button>
                     </form>
 
@@ -234,30 +254,21 @@ function LoginPage() {
 
                         <div className="security-content">
                             <span className="security-dot" />
-
-                            <span>
-                                CONNECTION READY
-                            </span>
+                            <span>CONNECTION READY</span>
                         </div>
                     </div>
-                    <div className="auth-switch">
-                        <span>New to Nuvio?</span>
 
-                        <Link to="/signup">
-                            Create Account →
+                    <div className="auth-switch">
+                        <span>Remember your password?</span>
+
+                        <Link to="/login">
+                            Back to Login →
                         </Link>
                     </div>
-                </div>
-
-
-
-                <div className="auth-corner">
-                    <span>35.00</span>
-                    <span>72.00</span>
                 </div>
             </section>
         </main>
     );
 }
 
-export default LoginPage;
+export default ResetPasswordPage;

@@ -1,7 +1,7 @@
 .login-page {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: 1fr 1fr;
     overflow: hidden;
     background: #080c12;
     color: #ffffff;
@@ -72,28 +72,11 @@
 }
 
 .signal-logo {
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    width: 50px;
+    height: 50px;
     border-radius: 8px;
-
-    background:
-        linear-gradient(135deg,
-            #2563eb,
-            #7c3aed,
-            #a855f7);
-
-    color: white;
-
-    font-size: 18px;
-    font-weight: 700;
-
-    box-shadow:
-        0 0 30px rgba(91, 77, 255, 0.22);
+    background: none !important;
+    box-shadow: none !important;
 }
 
 .signal-brand>div:last-child {
@@ -433,7 +416,7 @@
 
 .auth-section {
     position: relative;
-
+    width: 100% !important;
     min-height: 100vh;
 
     display: flex;
@@ -914,20 +897,59 @@
     color: #ffffff;
 }
 
-.forgot-password-link {
+.password-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px;
+    color: #F8F8FF;
+    transition: transform 0.2s ease;
+    width: 40px;
+    height: 40px;
+
     display: flex;
-    justify-content: flex-end;
-    margin-top: -4px;
-    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.forgot-password-link a {
-    color: #6d8cff;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.25s ease;
+.password-toggle:hover {
+    transform: scale(1.15);
 }
 
-.forgot-password-link a:hover {
-    color: #ffffff;
+.password-strength {
+    margin-top: 8px;
+    color: #94A3B8;
+}
+
+.password-strength .weak {
+    color: #ef4444;
+}
+
+.password-strength .medium {
+    color: #f59e0b;
+}
+
+.password-strength .strong {
+    color: #22c55e;
+}
+
+.password-match {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    background: rgba(34, 197, 94, .08);
+
+    color: #22c55e;
 }

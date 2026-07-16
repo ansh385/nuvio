@@ -35,3 +35,16 @@ export async function loginUser({ email, password }: LoginData) {
 
     return data;
 }
+
+export async function forgotPassword(email: string) {
+    const { data, error } =
+        await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: "http://localhost:5173/reset-password",
+        });
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+}
